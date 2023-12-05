@@ -4,7 +4,6 @@ import {
   Text,
   TouchableOpacity,
   View,
-  ScrollView,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { btn1, colors, hr80, navbtn, navbtnin } from "../globals/style";
@@ -19,31 +18,20 @@ const Placeorder = ({ navigation, route }) => {
     setOrderdata(JSON.parse(cartdata));
   }, [cartdata]);
 
-  // console.log(orderdata.cart[0])
-  // console.log(typeof (orderdata))
-
-  // console.log(cartdata)
-
-  // userdata -------------------------------------------------------
   const [userloggeduid, setUserloggeduid] = useState(null);
   const [userdata, setUserdata] = useState(null);
   useEffect(() => {
     const checklogin = () => {
       firebase.auth().onAuthStateChanged((user) => {
-        // console.log(user);
         if (user) {
-          // navigation.navigate('home');
           setUserloggeduid(user.uid);
         } else {
-          // No user is signed in.
           console.log("no user");
         }
       });
     };
     checklogin();
   }, []);
-
-  // // console.log(userloggeduid);
 
   useEffect(() => {
     const getuserdata = async () => {
@@ -68,18 +56,14 @@ const Placeorder = ({ navigation, route }) => {
       const foodprice = JSON.parse(cartdata).cart;
       let totalfoodprice = 0;
       foodprice.map((item) => {
-        // console.log(item.data.foodPrice)
         totalfoodprice =
           parseInt(item.data.foodPrice) * parseInt(item.Foodquantity) +
           parseInt(item.data.foodAddonPrice) * parseInt(item.Addonquantity) +
           totalfoodprice;
       });
-      // console.log(totalfoodprice)
       setTotalCost(JSON.stringify(totalfoodprice));
     }
   }, [cartdata]);
-
-  // console.log(userdata);
 
   const placenow = () => {
     const docRef = firebase
@@ -99,123 +83,128 @@ const Placeorder = ({ navigation, route }) => {
       orderpayment: "online",
       paymenttotal: totalCost,
     });
-    // navigation.navigate('home');
     alert("Order Placed Successfully");
-    // navigation.navigate('trackorders');
   };
 
   return (
-    <ScrollView style={styles.containerout}>
-      <TouchableOpacity onPress={() => navigation.navigate("home")}>
-        <View style={navbtn}>
-          <AntDesign name="back" size={24} color="black" style={navbtnin} />
-        </View>
-      </TouchableOpacity>
-      <View style={styles.container}>
-        <Text style={styles.head1}>Your Order Summary</Text>
-        <FlatList
-          style={styles.c1}
-          data={orderdata.cart}
-          renderItem={({ item }) => {
-            return (
-              <View style={styles.rowout}>
-                <View style={styles.row}>
-                  <View style={styles.left}>
-                    <Text style={styles.qty}>{item.Foodquantity}</Text>
-                    <Text style={styles.title}>{item.data.foodName}</Text>
-                    <Text style={styles.price1}>ETB {item.data.foodPrice}</Text>
-                  </View>
-                  <View style={styles.right}>
-                    <Text style={styles.totalprice}>
-                    ETB
-                      {parseInt(item.Foodquantity) *
-                        parseInt(item.data.foodPrice)}
-                    </Text>
-                  </View>
-                </View>
+    <FlatList
+      style={styles.containerout}
+      data={[{ key: 'orderSummary' }]} // You can modify the data structure as needed
+      renderItem={() => (
+        <View>
+          <TouchableOpacity onPress={() => navigation.navigate("home")}>
+            <View style={navbtn}>
+              <AntDesign name="back" size={24} color="black" style={navbtnin} />
+            </View>
+          </TouchableOpacity>
+          <View style={styles.container}>
+            <Text style={styles.head1}>Your Order Summary</Text>
+            <FlatList
+              style={styles.c1}
+              data={orderdata.cart}
+              renderItem={({ item }) => {
+                return (
+                  <View style={styles.rowout}>
+                    <View style={styles.row}>
+                      <View style={styles.left}>
+                        <Text style={styles.qty}>{item.Foodquantity}</Text>
+                        <Text style={styles.title}>{item.data.foodName}</Text>
+                        <Text style={styles.price1}>ETB {item.data.foodPrice}</Text>
+                      </View>
+                      <View style={styles.right}>
+                        <Text style={styles.totalprice}>
+                          ETB
+                          {parseInt(item.Foodquantity) *
+                            parseInt(item.data.foodPrice)}
+                        </Text>
+                      </View>
+                    </View>
 
-                <View style={styles.row}>
-                  <View style={styles.left}>
-                    <Text style={styles.qty}>{item.Addonquantity}</Text>
-                    <Text style={styles.title}>{item.data.foodAddon}</Text>
-                    <Text style={styles.price1}>
-                    ETB {item.data.foodAddonPrice}
-                    </Text>
+                    <View style={styles.row}>
+                      <View style={styles.left}>
+                        <Text style={styles.qty}>{item.Addonquantity}</Text>
+                        <Text style={styles.title}>{item.data.foodAddon}</Text>
+                        <Text style={styles.price1}>
+                          ETB {item.data.foodAddonPrice}
+                        </Text>
+                      </View>
+                      <View style={styles.right}>
+                        <Text style={styles.totalprice}>
+                          ETB 
+                          {parseInt(item.Addonquantity) *
+                            parseInt(item.data.foodAddonPrice)}
+                        </Text>
+                      </View>
+                    </View>
                   </View>
-                  <View style={styles.right}>
-                    <Text style={styles.totalprice}>
-                    ETB 
-                      {parseInt(item.Addonquantity) *
-                        parseInt(item.data.foodAddonPrice)}
-                    </Text>
-                  </View>
+                );
+              }}
+            />
+            <View style={hr80}></View>
+            <View style={styles.row}>
+              <View style={styles.left}>
+                <Text style={styles.title}>Order Total :</Text>
+              </View>
+              <View style={styles.left}>
+                <Text style={styles.totalprice}>ETB{totalCost}</Text>
+              </View>
+            </View>
+
+            <View style={hr80}></View>
+
+            <View style={styles.userdataout}>
+              <Text style={styles.head1}>Your Details</Text>
+              <View style={styles.row}>
+                <View style={styles.left}>
+                  <Text style={styles.title}>Name :</Text>
+                </View>
+                <View style={styles.right}>
+                  <Text style={styles.title}>{userdata?.name}</Text>
                 </View>
               </View>
-            );
-          }}
-        />
-        <View style={hr80}></View>
-        <View style={styles.row}>
-          <View style={styles.left}>
-            <Text style={styles.title}>Order Total :</Text>
-          </View>
-          <View style={styles.left}>
-            <Text style={styles.totalprice}>ETB{totalCost}</Text>
-          </View>
-        </View>
+              <View style={styles.row}>
+                <View style={styles.left}>
+                  <Text style={styles.title}>Email :</Text>
+                </View>
+                <View style={styles.right}>
+                  <Text style={styles.title}>{userdata?.email}</Text>
+                </View>
+              </View>
 
-        <View style={hr80}></View>
+              <View style={styles.row}>
+                <View style={styles.left}>
+                  <Text style={styles.title}>Phone :</Text>
+                </View>
 
-        <View style={styles.userdataout}>
-          <Text style={styles.head1}>Your Details</Text>
-          <View style={styles.row}>
-            <View style={styles.left}>
-              <Text style={styles.title}>Name :</Text>
-            </View>
-            <View style={styles.right}>
-              <Text style={styles.title}>{userdata?.name}</Text>
-            </View>
-          </View>
-          <View style={styles.row}>
-            <View style={styles.left}>
-              <Text style={styles.title}>Email :</Text>
-            </View>
-            <View style={styles.right}>
-              <Text style={styles.title}>{userdata?.email}</Text>
-            </View>
-          </View>
+                <View style={styles.right}>
+                  <Text style={styles.title}>{userdata?.phone}</Text>
+                </View>
+              </View>
 
-          <View style={styles.row}>
-            <View style={styles.left}>
-              <Text style={styles.title}>Phone :</Text>
+              <View style={styles.row}>
+                <View style={styles.left}>
+                  <Text style={styles.title}>Address :</Text>
+                </View>
+                <View style={styles.right}>
+                  <Text style={styles.title}>{userdata?.address}</Text>
+                </View>
+              </View>
             </View>
 
-            <View style={styles.right}>
-              <Text style={styles.title}>{userdata?.phone}</Text>
-            </View>
-          </View>
+            <View style={hr80}></View>
 
-          <View style={styles.row}>
-            <View style={styles.left}>
-              <Text style={styles.title}>Address :</Text>
-            </View>
-            <View style={styles.right}>
-              <Text style={styles.title}>{userdata?.address}</Text>
+            <View>
+              <TouchableOpacity style={btn1}>
+                <Text style={styles.btntext} onPress={() => placenow()}>
+                  Proceed to Payment
+                </Text>
+              </TouchableOpacity>
             </View>
           </View>
         </View>
-
-        <View style={hr80}></View>
-
-        <View>
-          <TouchableOpacity style={btn1}>
-            <Text style={styles.btntext} onPress={() => placenow()}>
-              Proceed to Payment
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    </ScrollView>
+      )}
+      keyExtractor={(item) => item.key}
+    />
   );
 };
 
