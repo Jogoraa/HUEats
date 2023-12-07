@@ -13,7 +13,7 @@ import Productpage from './src/screens/Productpage';
 import UserCart from './src/screens/UserCart';
 import Placeorder from './src/screens/Placeorder';
 import TrackOrders from './src/screens/TrackOrders';
-
+import ForgotPasswordScreen from './src/screens/LoginSignupScreens/ForgotPasswordScreen';
 export default function App() {
   const Stack = createNativeStackNavigator();
 
@@ -49,6 +49,7 @@ export default function App() {
   component={Userprofile}
   options={{ headerShown: false }}
 />
+<Stack.Screen name="forgotpassword" component={ForgotPasswordScreen} />
 
 <Stack.Screen
   name="productpage"
@@ -101,6 +102,8 @@ const DATA = [
       { key: "cart", component: UserCart, options: { headerShown: false } },
       { key: "placeorder", component: Placeorder, options: { headerShown: false } },
       { key: "trackorders", component: TrackOrders, options: { headerShown: false } },
+      { key: "forgotpassword", component: ForgotPasswordScreen, options: { headerShown: false } },
+
     ],
   },
 ];

@@ -80,8 +80,9 @@ const LoginScreen = ({ navigation }) => {
                 <Text style={{ color: colors.col1, fontSize: titles.btntxt, fontWeight: "bold" }}>Sign in</Text>
             </TouchableOpacity>
 
-
-            <Text style={styles.forgot}>Forgot Password?</Text>
+<Text style={styles.forgot} onPress={() => navigation.navigate('forgotpassword')}>
+        Forgot Password?
+      </Text>
             <Text style={styles.or}>OR</Text>
             <Text style={styles.gftxt}>Sign In With </Text>
 

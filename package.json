@@ -14,6 +14,7 @@
     "@react-native-firebase/auth": "^18.7.1",
     "@react-native-firebase/firestore": "^18.7.1",
     "@react-native-firebase/storage": "^18.7.1",
+    "@react-navigation/drawer": "^6.6.6",
     "@react-navigation/native": "^6.1.9",
     "@react-navigation/native-stack": "^6.9.17",
     "chapa": "^1.0.5",
