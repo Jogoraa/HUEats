@@ -81,7 +81,7 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace 'com.virajj014.FoodApp'
+    namespace "com.hueats"
     defaultConfig {
         applicationId 'com.virajj014.FoodApp'
         minSdkVersion rootProject.ext.minSdkVersion
