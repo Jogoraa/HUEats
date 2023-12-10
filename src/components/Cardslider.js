@@ -29,7 +29,7 @@ const Cardslider = ({ title, data, navigation }) => {
                                 <Text style={styles.txt1}>{item.foodName}</Text>
 
                                 <View style={styles.s2in}>
-                                    <Text style={styles.txt2}>Rs.{item.foodPrice}/-</Text>
+                                    <Text style={styles.txt2}>ETB {item.foodPrice} </Text>
                                     {item.foodType == 'veg' ? <Text style={veg}></Text> : <Text style={nonveg}></Text>}
                                 </View>
 

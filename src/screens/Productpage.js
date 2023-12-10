@@ -2,6 +2,7 @@ import { View, Text, TouchableOpacity, StyleSheet, Image, ScrollView, TextInput 
 import React, { useState } from 'react'
 import { btn1, btn2, colors, hr80, navbtn, navbtnin, navbtnout, nonveg, veg } from '../globals/style';
 import { AntDesign } from '@expo/vector-icons';
+import { FlatList } from 'react-native';
 
 import { firebase } from '../../Firebase/firebaseConfig'
 
@@ -113,7 +114,7 @@ const Productpage = ({ navigation, route }) => {
                         <Text style={styles.txt3}>Add Extra </Text>
                         <View style={styles.c3in}>
                             <Text style={styles.text4}>{data.foodAddon}</Text>
-                            <Text style={styles.text4}>ETB {data.foodAddonPrice}/-</Text>
+                            <Text style={styles.text4}>ETB {data.foodAddonPrice}</Text>
                         </View>
 
                         <View style={incdecout}>
@@ -151,7 +152,7 @@ const Productpage = ({ navigation, route }) => {
                                     ((parseInt(data.foodPrice) * parseInt(quantity))
                                         + parseInt(addonquantity) * parseInt(data.foodAddonPrice)).toString()
 
-                                }/-</Text>
+                                }</Text>
 
                                 :
                                 <Text style={styles.txt3}>ETB {

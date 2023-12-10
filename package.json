@@ -36,7 +36,8 @@
     "react-native-swiper": "^1.6.0",
     "react-native-web": "~0.19.6",
     "react-native-webview": "^13.6.3",
-    "uuid": "^9.0.1"
+    "uuid": "^9.0.1",
+    "expo-dev-client": "~2.4.12"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

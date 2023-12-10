@@ -78,10 +78,11 @@ def jscFlavor = 'org.webkit:android-jsc:+'
 
 android {
     ndkVersion rootProject.ext.ndkVersion
+    compileSdkVersion 33
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.hueats"
+    namespace 'com.virajj014.FoodApp'
     defaultConfig {
         applicationId 'com.virajj014.FoodApp'
         minSdkVersion rootProject.ext.minSdkVersion
