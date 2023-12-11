@@ -4,6 +4,9 @@ import { AntDesign } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { colors } from '../globals/style';
 import { FontAwesome5 } from '@expo/vector-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faCog } from '@fortawesome/free-solid-svg-icons';  // Import the correct icon
+
 const BottomNav = ({ navigation }) => {
     return (
         <View style={styles.container}>
@@ -13,19 +16,22 @@ const BottomNav = ({ navigation }) => {
 
             </View>
             <View style={styles.btncon2} >
-                <Ionicons name="search" size={40} color="black" style={styles.icon2} onPress={() => { navigation.navigate('home') }} />
+                <Ionicons name="search" size={30} color="black" style={styles.icon2} onPress={() => { navigation.navigate('search') }} />
             </View>
             <View style={styles.btncon1} >
-                <AntDesign name="shoppingcart" size={30} color="black" style={styles.icon1} onPress={() => { navigation.navigate('cart') }} />
+                <FontAwesome5 name="cart-plus" size={30} color="black" style={styles.icon1} onPress={() => { navigation.navigate('cart') }} />
 
             </View>
             <View style={styles.btncon1} >
                 <FontAwesome5 name="map-marked-alt" size={30} color="black" style={styles.icon1} onPress={() => { navigation.navigate('trackorders') }} />
             </View>
+            <View style={styles.btncon1} >
+            <FontAwesome5 name="cog" size={30} color="black" style={styles.icon1} onPress={() => { navigation.navigate('settings') }} />
+            </View>
         </View>
+        
     )
 }
-
 export default BottomNav
 
 const styles = StyleSheet.create({
@@ -50,16 +56,14 @@ const styles = StyleSheet.create({
         position: 'relative',
         top: -20,
         backgroundColor: colors.text1,
-        width: 60,
-        height: 60,
+        width: 50,
+        height: 50,
         borderRadius: 60,
     },
     icon2: {
         color: 'white',
-
     },
     icon1: {
         color: colors.text1,
-
-    }
-})
+    },
+});

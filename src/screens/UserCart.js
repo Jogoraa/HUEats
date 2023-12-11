@@ -58,7 +58,6 @@ const UserCart = ({ navigation }) => {
     // console.log(typeof (cartdata))
     // console.log(cartdata)
     return (
-
         <View style={styles.containerout}>
             <TouchableOpacity onPress={() => navigation.navigate('home')}>
                 <View style={navbtn}>
@@ -74,8 +73,10 @@ const UserCart = ({ navigation }) => {
                     {cartdata == null || JSON.parse(cartdata).cart.length == 0 ?
                         <Text style={styles.head2}>Your Cart is Empty</Text>
                         :
-                        <FlatList style={styles.cardlist} data={JSON.parse(cartdata).cart} renderItem={
-                            ({ item }) => {
+                        <FlatList
+                            style={styles.cardlist}
+                            data={JSON.parse(cartdata).cart}
+                            renderItem={({ item }) => {
                                 return (
                                     <View style={styles.cartcard}>
                                         <Image source={{ uri: item.data.foodImageUrl }} style={styles.cartimg} />
@@ -94,11 +95,11 @@ const UserCart = ({ navigation }) => {
                                                 <AntDesign name="delete" size={24} color="black" style={styles.del} />
                                             </TouchableOpacity>
                                         </View>
-
                                     </View>
-                                )
-                            }
-                        } />}
+                                );
+                            }}
+                        />
+                    }
                 </View>
                 <View style={styles.btncont}>
                     <View style={styles.c3}>
@@ -111,11 +112,9 @@ const UserCart = ({ navigation }) => {
                 </View>
             </View>
         </View>
-    )
-}
-
-export default UserCart
-
+    );
+    
+                }
 const styles = StyleSheet.create({
     containerout: {
         flex: 1,
@@ -273,3 +272,4 @@ const styles = StyleSheet.create({
         color: colors.text1,
     }
 })
+export default UserCart

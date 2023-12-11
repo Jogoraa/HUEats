@@ -12,6 +12,12 @@ import UserCart from './src/screens/UserCart';
 import Placeorder from './src/screens/Placeorder';
 import TrackOrders from './src/screens/TrackOrders';
 import ForgotPasswordScreen from './src/screens/LoginSignupScreens/ForgotPasswordScreen';
+import Settings from './src/screens/Settings';
+import SearchScreen from './src/screens/SearchScreen';
+import ProfileScreen from './src/screens/ProfileScreen';
+import EditProfileScreen from './src/screens/EditProfileScreen';
+import PrivacyPolicyScreen from './src/services/PrivacyPolicyScreen';
+import AboutScreen from './src/services/About';
 
 const Stack = createNativeStackNavigator();
 
@@ -30,6 +36,15 @@ export default function App() {
           { name: "placeorder", component: Placeorder },
           { name: "trackorders", component: TrackOrders },
           { name: "forgotpassword", component: ForgotPasswordScreen },
+          { name: "settings", component: Settings },
+          { name: "search", component: SearchScreen },
+          { name: "profile", component: ProfileScreen },
+          { name: "EditProfile", component: EditProfileScreen },
+          { name: "privacy", component: PrivacyPolicyScreen },
+          { name: "about", component: AboutScreen },
+
+
+
         ].map((screen) => (
           <Stack.Screen
             key={screen.name}

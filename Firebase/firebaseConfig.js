@@ -1,9 +1,7 @@
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
-import "firebase/compat/storage";  // Add this line for Firebase Storage
-
-
+import "firebase/compat/storage";
 const firebaseConfig = {
     apiKey: "AIzaSyDByh2QonwoWUFx5HRvriJuZG_oiVM0QrU",
     authDomain: "foodapp2-4ba23.firebaseapp.com",
@@ -17,5 +15,7 @@ const firebaseConfig = {
 if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
 }
+const db = firebase.firestore(); // Use this instead of db.collection
 
 export { firebase }
+export { db };
