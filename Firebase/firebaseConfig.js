@@ -3,13 +3,13 @@ import "firebase/compat/auth";
 import "firebase/compat/firestore";
 import "firebase/compat/storage";
 const firebaseConfig = {
-    apiKey: "AIzaSyDByh2QonwoWUFx5HRvriJuZG_oiVM0QrU",
-    authDomain: "foodapp2-4ba23.firebaseapp.com",
-    projectId: "foodapp2-4ba23",
-    storageBucket: "foodapp2-4ba23.appspot.com",
-    messagingSenderId: "269744887751",
-    appId: "1:269744887751:web:23879bac40f9ff96b76be2",
-    measurementId: "G-FPY9C1VV8C"};
+   apiKey: "AIzaSyCSPxptSrqkhb4RH-q-THO18cBfiY5ekfw",
+  authDomain: "hu-eats-2f662.firebaseapp.com",
+  projectId: "hu-eats-2f662",
+  storageBucket: "hu-eats-2f662.appspot.com",
+  messagingSenderId: "175497629710",
+  appId: "1:175497629710:web:622f69ffaa7deb49afec5f",
+  measurementId: "G-QFK8YTQLP9"};
 
 // Initialize Firebase
 if (!firebase.apps.length) {

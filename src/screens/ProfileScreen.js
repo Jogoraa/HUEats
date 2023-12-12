@@ -50,8 +50,8 @@ const ProfileScreen = ({ navigation }) => {
       <View style={styles.header}>
         <Image
           style={styles.profileImage}
-          source={{ uri: 'https://randomuser.me/api/portraits/men/10.jpg' }} // Use userdata.profileImageUrl here
-        />
+          source={{ uri: userdata.profileImageUrl }}
+          />
         <Text style={styles.name}>{userdata.name}</Text>
         <Text style={styles.subtitle}>{userdata.jobTitle}</Text>
       </View>
