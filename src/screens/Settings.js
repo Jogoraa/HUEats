@@ -39,7 +39,7 @@ export default function Settings({ navigation }) {
   };
   const goToEditProfile = () => {
     // Navigate to the Edit Profile screen
-    navigation.navigate('profile'); // Replace 'EditProfileScreen' with the actual screen name
+    navigation.navigate('userprofile'); // Replace 'EditProfileScreen' with the actual screen name
   };
 
 

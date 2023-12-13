@@ -50,7 +50,6 @@ const ProfileScreen = ({ navigation }) => {
       <View style={styles.header}>
         <Image
           style={styles.profileImage}
-          source={{ uri: userdata.profileImageUrl }}
           />
         <Text style={styles.name}>{userdata.name}</Text>
         <Text style={styles.subtitle}>{userdata.jobTitle}</Text>
@@ -70,12 +69,6 @@ const ProfileScreen = ({ navigation }) => {
         <Text style={styles.title}>Address</Text>
         <Text style={styles.detail}>{userdata.address}</Text>
       </View>
-
-      <View style={styles.details}>
-        <Text style={styles.title}>Date of Birth</Text>
-        <Text style={styles.detail}>{userdata.dateOfBirth}</Text>
-      </View>
-
       <TouchableOpacity onPress={navigateToEditProfile}>
         <View style={styles.editProfileButton}>
           <Text style={styles.buttonText}>Edit Profile</Text>
@@ -95,11 +88,7 @@ const styles = StyleSheet.create({
   header: {
     alignItems: 'center',
   },
-  profileImage: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-  },
+  
   name: {
     fontSize: 24,
     fontWeight: 'bold',

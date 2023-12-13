@@ -38,8 +38,8 @@ export default function App() {
           { name: "forgotpassword", component: ForgotPasswordScreen },
           { name: "settings", component: Settings },
           { name: "search", component: SearchScreen },
-          { name: "profile", component: ProfileScreen },
-          { name: "EditProfile", component: EditProfileScreen },
+        //  { name: "profile", component: ProfileScreen },
+       //   { name: "EditProfile", component: EditProfileScreen },
           { name: "privacy", component: PrivacyPolicyScreen },
           { name: "about", component: AboutScreen },
 
