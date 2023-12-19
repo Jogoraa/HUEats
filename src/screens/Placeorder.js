@@ -83,9 +83,44 @@ const Placeorder = ({ navigation, route }) => {
       orderpayment: "online",
       paymenttotal: totalCost,
     });
-    alert("Order Placed Successfully");
-  };
 
+    // Constructing the Chapa HTML form content with dynamic values
+    const htmlContent = `
+    <html>
+    <body onload="submitForm()">
+      <form id="paymentForm" method="POST" action="https://api.chapa.co/v1/hosted/pay">
+           <!-- Your input fields with dynamic values -->
+           <input type="hidden" name="public_key" value="CHAPUBK_TEST-ivLOr82NLXZOW9JEksb6v1KEkb3nx34F" />
+           <input type="hidden" name="tx_ref" value="HU-food-${new Date()
+        .getTime()
+        .toString()}" />
+           <input type="hidden" name="amount" value="${totalCost}" />
+           <input type="hidden" name="currency" value="ETB" />
+           <input type="hidden" name="email" value="${userdata?.email}" />
+           <input type="hidden" name="first_name" value="${userdata?.name}" />
+           <input type="hidden" name="title" value="HU Food Order" />
+           <input type="hidden" name="description" value="Paying with Confidence with cha" />
+           <input type="hidden" name="logo" value="https://chapa.link/asset/images/chapa_swirl.svg" />
+           <input type="hidden" name="callback_url" value="https://example.com/callbackurl" />
+           <input type="hidden" name="return_url" value="https://example.com/returnurl" />
+           <input type="hidden" name="meta[title]" value="test" />
+           <button type="submit">Pay Now</button>
+         </form>
+         <script>
+         function submitForm() {
+           var form = document.getElementById("paymentForm");
+           // Set the dynamic return_url here based on your logic
+           form.elements["return_url"].value = "";
+           form.submit();
+         }
+       </script>
+       </body>
+     </html>
+   `;
+
+    // Render the WebView with the HTML content
+    navigation.navigate("WebViewScreen", { htmlContent });
+  };
   return (
     <FlatList
       style={styles.containerout}
@@ -130,7 +165,7 @@ const Placeorder = ({ navigation, route }) => {
                       </View>
                       <View style={styles.right}>
                         <Text style={styles.totalprice}>
-                          ETB 
+                          ETB
                           {parseInt(item.Addonquantity) *
                             parseInt(item.data.foodAddonPrice)}
                         </Text>

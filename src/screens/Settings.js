@@ -3,12 +3,14 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert, Switch } f
 import { StatusBar } from 'expo-status-bar';
 import { AntDesign, Feather, MaterialIcons } from '@expo/vector-icons';
 import BottomNav from '../components/BottomNav';
+import { firebase } from '../../Firebase/firebaseConfig';
+
 // EditProfile component
 const EditProfile = ({ onPress }) => {
     return (
       <TouchableOpacity style={styles.option} onPress={onPress}>
         <MaterialIcons name="edit" size={20} color="black" style={styles.icon} />
-        <Text style={styles.optionText}>Edit Profile</Text>
+        <Text style={styles.optionText}>My Profile</Text>
       </TouchableOpacity>
     );
   };
@@ -39,10 +41,18 @@ export default function Settings({ navigation }) {
   };
   const goToEditProfile = () => {
     // Navigate to the Edit Profile screen
-    navigation.navigate('userprofile'); // Replace 'EditProfileScreen' with the actual screen name
+    navigation.navigate('userprofile'); 
   };
-
-
+  const handleLogout = () => {
+    firebase.auth().signOut().then(() => {
+      // Sign-out successful.
+      alert('you are logged out');
+      navigation.navigate('login');
+  }).catch((error) => {
+      // An error happened.
+      alert('Server Issue');
+  });
+  };
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
@@ -91,12 +101,15 @@ export default function Settings({ navigation }) {
           <MaterialIcons name="policy" size={20} color="black" style={styles.icon} />
           <Text style={styles.optionText}>Privacy Policy</Text>
         </TouchableOpacity>
-      </ScrollView>
+       {/* Log Out */}
+       <TouchableOpacity style={styles.option} onPress={handleLogout}>
+          <MaterialIcons name="logout" size={20} color="black" style={styles.icon} />
+          <Text style={styles.optionText}>Log Out</Text>
+        </TouchableOpacity>
+        </ScrollView>
 
-      {/* Bottom Navigation */}
-      <View style={styles.bottomnav}>
-        <BottomNav navigation={navigation} />
-      </View>
+
+      
     </View>
   );
 }

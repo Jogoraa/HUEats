@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, StatusBar, FlatList, ScrollView, TouchableOpacity, Animated } from 'react-native';
+import {
+  View,
+  StatusBar,
+  FlatList,
+  TouchableOpacity,
+  Animated,
+} from 'react-native';
+
 import HomeHeadNav from '../components/HomeHeadNav';
 import BottomNav from '../components/BottomNav';
-import { btn1, btn2, colors } from '../globals/style';
 import { firebase } from '../../Firebase/firebaseConfig';
 
 const TrackOrders = ({ navigation }) => {
@@ -12,17 +18,20 @@ const TrackOrders = ({ navigation }) => {
   const fadeIn = () => {
     Animated.timing(fadeAnim, {
       toValue: 1,
-      duration: 1000, // Adjust the duration as needed
+      duration: 1000,
       useNativeDriver: true,
     }).start();
   };
 
   const getOrders = async () => {
-    const ordersRef = firebase.firestore().collection('UserOrders').where('orderuseruid', '==', firebase.auth().currentUser.uid);
+    const ordersRef = firebase
+      .firestore()
+      .collection('UserOrders')
+      .where('orderuseruid', '==', firebase.auth().currentUser.uid);
     const snapshot = await ordersRef.get();
-    const ordersData = snapshot.docs.map(doc => doc.data());
+    const ordersData = snapshot.docs.map((doc) => doc.data());
     setOrders(ordersData);
-    fadeIn(); // Trigger the fade-in animation when orders are fetched
+    fadeIn();
   };
 
   useEffect(() => {
@@ -42,87 +51,64 @@ const TrackOrders = ({ navigation }) => {
     getOrders();
   };
 
+  const renderOrderItem = ({ item, index }) => (
+    <View style={styles.order} key={index}>
+      <Text style={styles.orderindex}>{index + 1}</Text>
+      <Text style={styles.ordertxt2}>Order ID: {item.orderid}</Text>
+      <Text style={styles.ordertxt2}>Order Date: {convertDate(item.orderdate)}</Text>
+      {item.orderItems.map((orderItem, itemIndex) => (
+        <View key={itemIndex}>
+          <Text>{orderItem.itemName}</Text>
+        </View>
+      ))}
+      <Text>Total Cost: {item.ordercost}</Text>
+      {item.orderstatus === 'Delivered' && <Text>Thank you for ordering with us</Text>}
+      {item.orderstatus === 'cancelled' && <Text>Sorry for the inconvenience</Text>}
+      {item.orderstatus !== 'cancelled' && item.orderstatus !== 'delivered' && (
+        <TouchableOpacity style={styles.cancelbtn} onPress={() => cancelOrder(item)}>
+          <Text style={styles.cencelbtnin}>Cancel Order</Text>
+        </TouchableOpacity>
+      )}
+    </View>
+  );
+
   return (
-    <Animated.View style={[styles.container, { opacity: fadeAnim }]}>
+    <>
       <StatusBar />
       <HomeHeadNav navigation={navigation} />
-      <View style={styles.bottomnav}>
+      <View >
         <BottomNav navigation={navigation} />
       </View>
-      <ScrollView style={styles.containerin}>
-        <Text style={styles.head1}>Track Orders</Text>
-        <View>
-          {orders.sort(
-            (a, b) => b.orderdate.seconds - a.orderdate.seconds
-          ).map((order, index) => (
-            <View style={styles.order} key={index}>
-              <Text style={styles.orderindex}>{index + 1}</Text>
-              <Text style={styles.ordertxt2}>order id : {order.orderid}</Text>
-              <Text style={styles.ordertxt2}>order date : {convertDate(order.orderdate)}</Text>
-              {order.orderstatus === 'ontheway' && <Text style={styles.orderotw}>Your order is on the way </Text>}
-              {order.orderstatus === 'delivered' && <Text style={styles.orderdelivered}>Your order is delivered </Text>}
-              {order.orderstatus === 'cancelled' && <Text style={styles.ordercancelled}>Your order is cancelled </Text>}
-              {order.orderstatus === 'pending' && <Text style={styles.orderpending}>Your order is pending </Text>}
-              <View style={styles.row1}>
-                <Text style={styles.ordertxt1}>Delivery Agent name & contact</Text>
-                {
-                  order.deliveryboy_name ? <Text style={styles.ordertxt2}>{order.deliveryboy_name} : {order.deliveryboy_contact}</Text> : <Text style={styles.ordertxt2}>Not Assigned</Text>
-                }
-                {
-                  order.deliveryboy_phone ? <Text style={styles.ordertxt2}>{order.deliveryboy_phone}</Text> : null
-                }
+      <FlatList
+        style={[styles.container, { opacity: fadeAnim }]}
+        data={orders}
+        keyExtractor={(item) => item.orderid}
+        renderItem={({ item, index }) => (
+          <View style={styles.order} key={index}>
+            <Text style={styles.orderindex}>{index + 1}</Text>
+            <Text style={styles.ordertxt2}>Order ID: {item.orderid}</Text>
+            <Text style={styles.ordertxt2}>Order Date: {convertDate(item.orderdate)}</Text>
+            {item.orderItems.map((orderItem, itemIndex) => (
+              <View key={itemIndex}>
+                <Text>{orderItem.itemName}</Text>
               </View>
-              <FlatList
-                style={styles.c1}
-                data={order.orderdata}
-                renderItem={({ item }) => (
-                  <View style={styles.rowout}>
-                    <View style={styles.row}>
-                      <View style={styles.left}>
-                        <Text style={styles.qty}>{item.Foodquantity}</Text>
-                        <Text style={styles.title}>{item.data.foodName}</Text>
-                        <Text style={styles.price1}>ETB{item.data.foodPrice}</Text>
-                      </View>
-                      <View style={styles.right}>
-                        <Text style={styles.totalprice}>ETB{parseInt(item.Foodquantity) * parseInt(item.data.foodPrice)}</Text>
-                      </View>
-                    </View>
-                    <View style={styles.row}>
-                      <View style={styles.left}>
-                        <Text style={styles.qty}>{item.Addonquantity}</Text>
-                        <Text style={styles.title}>{item.data.foodAddon}</Text>
-                        <Text style={styles.price1}>ETB{item.data.foodAddonPrice}</Text>
-                      </View>
-                      <View style={styles.right}>
-                        <Text style={styles.totalprice}>ETB{parseInt(item.Addonquantity) * parseInt(item.data.foodAddonPrice)}</Text>
-                      </View>
-                    </View>
-                  </View>
-                )}
-              />
-              <Text style={styles.total}>Total: ETB{order.ordercost}</Text>
-              {
-                order.orderstatus === 'Delivered' ? <Text style={styles.ordertxt3}>Thank you for ordering with us</Text> : null
-              }
-              {
-                order.orderstatus === 'cancelled' ? <Text style={styles.ordertxt3}>Sorry for the inconvenience</Text> : null
-              }
-              {
-                order.orderstatus !== 'cancelled' && order.orderstatus !== 'delivered' ? (
-                  <TouchableOpacity style={styles.cancelbtn} onPress={() => cancelOrder(order)}>
-                    <Text style={styles.cencelbtnin}>Cancel Order</Text>
-                  </TouchableOpacity>
-                ) : null
-              }
-            </View>
-          ))}
-        </View>
-      </ScrollView>
-    </Animated.View>
+            ))}
+            <Text>Total Cost: {item.ordercost}</Text>
+            {item.orderstatus === 'Delivered' && <Text>Thank you for ordering with us</Text>}
+            {item.orderstatus === 'cancelled' && <Text>Sorry for the inconvenience</Text>}
+            {item.orderstatus !== 'cancelled' && item.orderstatus !== 'delivered' && (
+              <TouchableOpacity style={styles.cancelbtn} onPress={() => cancelOrder(item)}>
+                <Text style={styles.cencelbtnin}>Cancel Order</Text>
+              </TouchableOpacity>
+            )}
+          </View>
+        )}
+      />
+    </>
   );
-};
-
-export default TrackOrders;
+}
+  
+  export default TrackOrders;
 
 const styles = StyleSheet.create({
   container: {

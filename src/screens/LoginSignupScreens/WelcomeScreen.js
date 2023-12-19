@@ -23,7 +23,7 @@ const WelcomeScreen = ({ navigation }) => {
     checklogin();
   }, []);
 
-  const handlelogout = () => {
+  const handleLogout = () => {
     firebase
       .auth()
       .signOut()
@@ -44,7 +44,7 @@ const WelcomeScreen = ({ navigation }) => {
         <Text style={styles.text}>Discover the best food delivered to your doorstep.</Text>
         <View style={hr80} />
 
-        {userlogged === null ? (
+
           <View style={styles.btnout}>
             <TouchableOpacity onPress={() => navigation.navigate('signup')} style={styles.btn}>
               <Text style={styles.btnText}>Sign Up</Text>
@@ -53,25 +53,15 @@ const WelcomeScreen = ({ navigation }) => {
               <Text style={styles.btnText}>Log In</Text>
             </TouchableOpacity>
           </View>
-        ) : (
-          <View style={styles.logged}>
-            <Text style={styles.txtlog}>
-              Signed in as <Text style={styles.txtlogin}>{userlogged.email}</Text>
-            </Text>
-            <View style={styles.btnoutBottom}>
-              <TouchableOpacity onPress={() => navigation.navigate('home')} style={styles.btnBottom}>
-                <Text style={styles.btnText}>Explore</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => handlelogout()} style={styles.btnBottom}>
-                <Text style={styles.btnText}>Log Out</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        )}
-      </View>
+       
+       </View>
+       <TouchableOpacity onPress={()=> navigation.navigate('driverlogin')} style={styles.driverButton}>
+          <Text style={styles.driverText}>Are you a driver?</Text>
+        </TouchableOpacity>
     </ImageBackground>
   );
 };
+
 
 const styles = StyleSheet.create({
   backgroundImage: {
@@ -144,8 +134,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginHorizontal: 5, // Adjusted margin
   },
+  driverButton: {
+    position: 'absolute',
+    top: 30,
+    right: 20,
+    padding: 10,
+    borderRadius: 10,
+  },
+  driverButtonText: {
+    fontSize: 16,
+    color: '#fff', // White color (adjust as needed)
+    fontWeight: '700',
+  },
 });
 
 export default WelcomeScreen;
-
-

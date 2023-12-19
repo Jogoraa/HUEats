@@ -27,7 +27,7 @@ const LoginScreen = ({ navigation }) => {
                 // console.log(user);
                 // ...
 
-                navigation.navigate('welcomepage');
+                navigation.navigate('home');
             })
             .catch((error) => {
                 var errorMessage = error.message;
